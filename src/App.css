@@ -1,0 +1,478 @@
+/* Base Architecture & Variables */
+:root {
+  --bg-gradient: linear-gradient(135deg, #f6f8fd 0%, #f1f5f9 100%);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent-color: #3b82f6;
+  --accent-hover: #2563eb;
+  --danger-color: #ef4444;
+  --success-color: #10b981;
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Note Colors */
+  --note-default: rgba(255, 255, 255, 0.7);
+  --note-red: rgba(254, 226, 226, 0.7);
+  --note-blue: rgba(219, 234, 254, 0.7);
+  --note-green: rgba(209, 250, 229, 0.7);
+  --note-yellow: rgba(254, 240, 138, 0.7);
+}
+
+body.dark-theme {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  
+  /* Dark Note Colors */
+  --note-default: rgba(30, 41, 59, 0.7);
+  --note-red: rgba(127, 29, 29, 0.4);
+  --note-blue: rgba(30, 58, 138, 0.4);
+  --note-green: rgba(6, 78, 59, 0.4);
+  --note-yellow: rgba(113, 63, 18, 0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  transition: background 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* Background Decorations */
+.background-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+}
+
+.shape-1 {
+  background: #3b82f6;
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  left: -100px;
+  animation: float 10s infinite alternate;
+}
+
+.shape-2 {
+  background: #10b981;
+  width: 300px;
+  height: 300px;
+  bottom: 10%;
+  right: -50px;
+  animation: float 12s infinite alternate-reverse;
+}
+
+/* Glassmorphism Utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 16px;
+}
+
+/* Header */
+header {
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(var(--glass-bg), 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.header-content {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(to right, var(--accent-color), #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Toggle Buttons */
+.view-toggle {
+  display: flex;
+  background: var(--glass-bg);
+  border-radius: 8px;
+  padding: 0.35rem;
+  border: 1px solid var(--glass-border);
+  gap: 0.25rem;
+}
+
+.view-toggle button, .theme-toggle {
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.view-toggle button.active {
+  background: var(--text-primary);
+  color: var(--bg-color, #ffffff);
+}
+
+body.dark-theme .view-toggle button.active {
+  color: #000000;
+}
+
+.theme-toggle {
+  background: var(--text-primary);
+  color: #ffffff;
+}
+
+body.dark-theme .theme-toggle {
+  color: #000000;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+/* Search & Filters */
+.search-input {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1rem;
+  transition: var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.album-filters {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.album-btn {
+  background: var(--glass-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+}
+
+.album-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.album-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+/* Creation Area */
+.create-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+.input-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ui-select {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.note-input {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+}
+
+.note-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.action-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-input {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.file-status {
+  margin-left: 1rem;
+  font-size: 0.85rem;
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+.add-btn {
+  background: var(--accent-color);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.add-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+/* Notes Feed Layouts */
+.notes-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.notes-container.grid-view {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.notes-container.list-view {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Note Cards */
+.note-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.note-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* Color Tags */
+.color-default { background: var(--note-default); }
+.color-red { background: var(--note-red); }
+.color-blue { background: var(--note-blue); }
+.color-green { background: var(--note-green); }
+.color-yellow { background: var(--note-yellow); }
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.note-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.note-subject {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.note-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.pin-btn {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pin-btn.pinned {
+  background: var(--text-primary);
+  color: var(--glass-bg);
+  border-color: var(--text-primary);
+}
+
+.note-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  white-space: pre-wrap;
+}
+
+.note-image-container {
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.note-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.note-footer {
+  border-top: 1px solid var(--glass-border);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.delete-btn:hover {
+  background: var(--danger-color);
+  color: white;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(30px) rotate(10deg); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-down { animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.scale-in { animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; opacity: 0; }
+.fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* Stagger note animations */
+.note-card:nth-child(1) { animation-delay: 0.1s; }
+.note-card:nth-child(2) { animation-delay: 0.2s; }
+.note-card:nth-child(3) { animation-delay: 0.3s; }
+.note-card:nth-child(4) { animation-delay: 0.4s; }
